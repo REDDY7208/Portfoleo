@@ -149,7 +149,7 @@ const About = () => {
   const [index, setIndex] = useState(0);
 
   return (
-    <div className='h-full bg-black/90 py-16 sm:py-24 md:py-32 text-center xl:text-left relative overflow-y-auto'>
+    <div className='h-screen bg-black/90 py-8 sm:py-12 text-center xl:text-left relative overflow-hidden'>
       <Circles />
       <motion.div
         variants={fadeIn('right', 0.2)}
@@ -160,7 +160,7 @@ const About = () => {
       >
         <Avatar />
       </motion.div>
-      <div className='container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6 gap-y-8 relative z-10 px-4 sm:px-6'>
+      <div className='container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6 gap-y-4 relative z-10 px-4 sm:px-6'>
         {/* Left Side - Clean and Simple */}
         <motion.div
           variants={fadeIn('right', 0.2)}
@@ -169,46 +169,46 @@ const About = () => {
           exit='hidden'
           className='flex-1 flex flex-col justify-center w-full'
         >
-          <h2 className='text-[24px] sm:text-[28px] md:text-[36px] lg:text-[42px] leading-tight mb-4 font-semibold px-4 sm:px-0'>
+          <h2 className='text-[20px] sm:text-[24px] md:text-[30px] lg:text-[36px] leading-tight mb-3 font-semibold px-4 sm:px-0'>
             Automating <span className='text-accent'>AI/ML</span> deployments
             with DevOps excellence.
           </h2>
-          <p className='max-w-[500px] mx-auto xl:mx-0 mb-6 sm:mb-8 px-4 sm:px-2 xl:px-0 text-white/80 text-xs sm:text-sm md:text-base'>
+          <p className='max-w-[500px] mx-auto xl:mx-0 mb-4 sm:mb-6 px-4 sm:px-2 xl:px-0 text-white/80 text-xs sm:text-sm'>
             DevOps Engineer with 2+ years in AI/ML deployment and MLOps automation. 
             Expert in CI/CD pipelines, Kubernetes microservices, and cloud infrastructure.
           </p>
           
           {/* Stats Counter */}
-          <div className='grid grid-cols-2 gap-3 sm:gap-4 max-w-[500px] mx-auto xl:mx-0 px-4 sm:px-0'>
-            <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10'>
-              <div className='text-2xl sm:text-3xl xl:text-4xl font-extrabold text-accent mb-1'>
+          <div className='grid grid-cols-2 gap-2 sm:gap-3 max-w-[500px] mx-auto xl:mx-0 px-4 sm:px-0'>
+            <div className='bg-white/5 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-white/10'>
+              <div className='text-xl sm:text-2xl xl:text-3xl font-extrabold text-accent mb-1'>
                 <CountUp start={0} end={2} duration={5} /> +
               </div>
-              <div className='text-[9px] sm:text-[10px] xl:text-xs uppercase tracking-wider text-white/60'>
+              <div className='text-[8px] sm:text-[9px] xl:text-[10px] uppercase tracking-wider text-white/60'>
                 Years of Experience
               </div>
             </div>
-            <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10'>
-              <div className='text-2xl sm:text-3xl xl:text-4xl font-extrabold text-accent mb-1'>
+            <div className='bg-white/5 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-white/10'>
+              <div className='text-xl sm:text-2xl xl:text-3xl font-extrabold text-accent mb-1'>
                 <CountUp start={0} end={8} duration={5} /> +
               </div>
-              <div className='text-[9px] sm:text-[10px] xl:text-xs uppercase tracking-wider text-white/60'>
+              <div className='text-[8px] sm:text-[9px] xl:text-[10px] uppercase tracking-wider text-white/60'>
                 Total Projects
               </div>
             </div>
-            <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10'>
-              <div className='text-2xl sm:text-3xl xl:text-4xl font-extrabold text-accent mb-1'>
+            <div className='bg-white/5 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-white/10'>
+              <div className='text-xl sm:text-2xl xl:text-3xl font-extrabold text-accent mb-1'>
                 <CountUp start={0} end={300} duration={5} /> +
               </div>
-              <div className='text-[9px] sm:text-[10px] xl:text-xs uppercase tracking-wider text-white/60'>
+              <div className='text-[8px] sm:text-[9px] xl:text-[10px] uppercase tracking-wider text-white/60'>
                 CI/CD Pipelines
               </div>
             </div>
-            <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10'>
-              <div className='text-2xl sm:text-3xl xl:text-4xl font-extrabold text-accent mb-1'>
+            <div className='bg-white/5 backdrop-blur-sm rounded-lg p-2 sm:p-3 border border-white/10'>
+              <div className='text-xl sm:text-2xl xl:text-3xl font-extrabold text-accent mb-1'>
                 <CountUp start={0} end={4} duration={5} /> +
               </div>
-              <div className='text-[9px] sm:text-[10px] xl:text-xs uppercase tracking-wider text-white/60'>
+              <div className='text-[8px] sm:text-[9px] xl:text-[10px] uppercase tracking-wider text-white/60'>
                 Cloud Platforms
               </div>
             </div>
@@ -224,7 +224,7 @@ const About = () => {
           className='flex flex-col w-full xl:max-w-[48%] px-4 sm:px-0'
         >
           {/* Tab Navigation */}
-          <div className='flex gap-x-3 sm:gap-x-4 xl:gap-x-6 mx-auto xl:mx-0 mb-4 sm:mb-6 flex-wrap justify-center xl:justify-start'>
+          <div className='flex gap-x-2 sm:gap-x-3 xl:gap-x-4 mx-auto xl:mx-0 mb-3 sm:mb-4 flex-wrap justify-center xl:justify-start'>
             {aboutData.map((item, itemIndex) => (
               <button
                 key={itemIndex}
@@ -232,7 +232,7 @@ const About = () => {
                   index === itemIndex
                     ? 'text-accent after:w-full after:bg-accent'
                     : 'text-white/60 hover:text-white/80'
-                } cursor-pointer capitalize text-sm sm:text-base xl:text-lg relative after:w-0 after:h-[2px] after:bg-white/20 after:absolute after:-bottom-1 after:left-0 after:transition-all after:duration-300 py-2`}
+                } cursor-pointer capitalize text-xs sm:text-sm xl:text-base relative after:w-0 after:h-[2px] after:bg-white/20 after:absolute after:-bottom-1 after:left-0 after:transition-all after:duration-300 py-1`}
                 onClick={() => setIndex(itemIndex)}
               >
                 {item.title}
@@ -241,23 +241,23 @@ const About = () => {
           </div>
 
           {/* Content Area */}
-          <div className='bg-white/5 backdrop-blur-sm rounded-lg p-4 sm:p-6 border border-white/10 min-h-[300px] sm:min-h-[400px] max-h-[400px] sm:max-h-[500px] overflow-y-auto'>
-            <div className='flex flex-col gap-y-3 sm:gap-y-4'>
+          <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10 h-[280px] sm:h-[320px] xl:h-[380px] overflow-y-auto'>
+            <div className='flex flex-col gap-y-2 sm:gap-y-3'>
               {aboutData[index].info.map((item, itemIndex) => (
                 <div
                   key={itemIndex}
-                  className='bg-white/5 rounded-lg p-3 sm:p-4 border border-white/10 hover:border-accent/50 transition-all duration-300'
+                  className='bg-white/5 rounded-lg p-2 sm:p-3 border border-white/10 hover:border-accent/50 transition-all duration-300'
                 >
-                  <div className='font-semibold text-white mb-2 text-sm sm:text-base'>{item.title}</div>
+                  <div className='font-semibold text-white mb-1 text-xs sm:text-sm'>{item.title}</div>
                   {item.stage && (
-                    <div className='text-xs sm:text-sm text-white/60 mb-3'>{item.stage}</div>
+                    <div className='text-[10px] sm:text-xs text-white/60 mb-2'>{item.stage}</div>
                   )}
                   {item.icons && (
-                    <div className='flex flex-wrap gap-2 sm:gap-3 mt-3'>
+                    <div className='flex flex-wrap gap-1 sm:gap-2 mt-2'>
                       {item.icons.map((icon, iconIndex) => (
                         <div
                           key={iconIndex}
-                          className='text-xl sm:text-2xl text-white/80 hover:text-accent hover:scale-110 transition-all duration-300'
+                          className='text-base sm:text-lg text-white/80 hover:text-accent hover:scale-110 transition-all duration-300'
                         >
                           {icon}
                         </div>

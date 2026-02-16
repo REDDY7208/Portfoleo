@@ -6,7 +6,7 @@ import { fadeIn } from '../../variants';
 
 const Contact = () => {
   return (
-    <div className='h-full bg-black/90 relative overflow-y-auto'>
+    <div className='h-screen bg-black/90 relative overflow-hidden'>
       <motion.div
         variants={fadeIn('right', 0.2)}
         initial='hidden'
@@ -16,14 +16,14 @@ const Contact = () => {
       >
         <Avatar />
       </motion.div>
-      <div className='container mx-auto py-20 sm:py-28 md:py-32 text-center xl:text-left flex items-center justify-center h-full relative z-10 px-4 sm:px-6'>
+      <div className='container mx-auto py-8 sm:py-12 text-center xl:text-left flex items-center justify-center h-full relative z-10 px-4 sm:px-6'>
         <div className='flex flex-col w-full max-w-[700px]'>
           <motion.h2
             variants={fadeIn('up', 0.2)}
             initial='hidden'
             animate='show'
             exit='hidden'
-            className='text-[28px] sm:text-[36px] md:text-[42px] lg:text-[48px] text-center mb-8 sm:mb-12 font-semibold leading-tight'
+            className='text-[24px] sm:text-[30px] md:text-[36px] lg:text-[42px] text-center mb-6 sm:mb-8 font-semibold leading-tight'
           >
             Let&apos;s <span className='text-accent'>collaborate.</span>
           </motion.h2>
@@ -33,7 +33,7 @@ const Contact = () => {
             initial='hidden'
             animate='show'
             exit='hidden'
-            className='flex-1 flex flex-col gap-4 sm:gap-6 w-full mx-auto'
+            className='flex-1 flex flex-col gap-3 sm:gap-4 w-full mx-auto'
           >
             <div className='flex flex-col sm:flex-row gap-4 sm:gap-x-6 w-full'>
               <input type='text' placeholder='name' className='input w-full' />

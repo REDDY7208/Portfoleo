@@ -5,53 +5,58 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper';
 import { BsArrowRight } from 'react-icons/bs';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const workSlides = {
   slides: [
     {
       images: [
         {
-          title: 'IELTSGenAI Platform',
+          title: 'Sasthra-SAI',
           path: '/thumb1.jpg',
-          description: 'AI-powered IELTS preparation platform with microservices architecture',
+          description: 'AI-powered learning assistant with automated CI/CD pipeline and Kubernetes deployment',
+          link: '/projects/sasthra-sai',
         },
         {
-          title: 'Interviu.in',
+          title: 'Sasthra-SOS',
           path: '/thumb2.jpg',
-          description: 'AI-driven interview preparation platform with CI/CD automation',
+          description: 'Emergency support system with Jenkins CI/CD, Docker containerization, and real-time monitoring',
+          link: '/projects/sasthra-sos',
         },
         {
-          title: 'School-of-Sasthra',
+          title: 'Sasthra-Guidance',
           path: '/thumb3.jpg',
-          description: 'AI-Tutor platform with Kubernetes orchestration',
+          description: 'Career guidance platform with GitLab CI/CD, microservices architecture, and cloud deployment',
+          link: '/projects/sasthra-guidance',
         },
         {
-          title: 'Sasthra NEET/JEE',
+          title: 'Sasthra-Education',
           path: '/thumb4.jpg',
-          description: 'Educational platform with MLOps workflows and monitoring',
+          description: 'Comprehensive education platform with automated testing, MLOps pipelines, and scalable infrastructure',
+          link: '/projects/sasthra-education',
         },
       ],
     },
     {
       images: [
         {
+          title: 'IELTSGenAI Platform',
+          path: '/thumb1.jpg',
+          description: 'AI-powered IELTS preparation with microservices and automated deployment',
+        },
+        {
+          title: 'Interviu.in',
+          path: '/thumb2.jpg',
+          description: 'AI-driven interview platform with CI/CD automation and monitoring',
+        },
+        {
           title: 'House Price Prediction',
-          path: '/thumb4.jpg',
+          path: '/thumb3.jpg',
           description: 'MLOps project with 92% accuracy and Kubernetes deployment',
         },
         {
-          title: 'Cellphone Price Prediction',
-          path: '/thumb1.jpg',
-          description: 'ML model with Docker containerization and FastAPI service',
-        },
-        {
-          title: 'Real-time Data Streaming',
-          path: '/thumb2.jpg',
-          description: 'Apache Kafka implementation for event-driven systems',
-        },
-        {
           title: 'Multi-Cloud Infrastructure',
-          path: '/thumb3.jpg',
+          path: '/thumb4.jpg',
           description: 'Terraform-based infrastructure across AWS, Azure, and GCP',
         },
       ],
@@ -60,6 +65,14 @@ const workSlides = {
 };
 
 const WorkSlider = () => {
+  const router = useRouter();
+
+  const handleProjectClick = (link) => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
   return (
     <Swiper
       spaceBetween={10}
@@ -78,6 +91,7 @@ const WorkSlider = () => {
                   <div
                     className='relative rounded-lg overflow-hidden flex items-center justify-center group'
                     key={index}
+                    onClick={() => handleProjectClick(image.link)}
                   >
                     <div className='flex items-center justify-center relative overflow-hidden group'>
                       <Image src={image.path} width={500} height={300} alt={image.title} />

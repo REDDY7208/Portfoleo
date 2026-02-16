@@ -42,7 +42,7 @@ const Home = () => {
   };
 
   return (
-    <div className='bg-primary/60 h-full overflow-hidden'>
+    <div className='bg-primary/60 h-screen overflow-hidden'>
       {/* Background Music */}
       <audio ref={audioRef} loop>
         <source src="/background-music.mp3" type="audio/mpeg" />
