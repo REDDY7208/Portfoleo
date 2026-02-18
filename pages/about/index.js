@@ -9,8 +9,6 @@ import {
   SiPrometheus,
   SiGrafana,
   SiNginx,
-  SiAmazonaws,
-  SiMicrosoftazure,
   SiGooglecloud,
   SiMlflow,
   SiTensorflow,
@@ -26,6 +24,8 @@ import {
   FaFlask,
   FaGitAlt,
   FaGithub,
+  FaAws,
+  FaMicrosoft,
 } from 'react-icons/fa';
 import Avatar from '../../components/Avatar';
 import Circles from '../../components/Circles';
@@ -49,8 +49,8 @@ const aboutData = [
           <SiPrometheus key='prometheus' />,
           <SiGrafana key='grafana' />,
           <SiNginx key='nginx' />,
-          <SiAmazonaws key='aws' />,
-          <SiMicrosoftazure key='azure' />,
+          <FaAws key='aws' />,
+          <FaMicrosoft key='azure' />,
           <SiGooglecloud key='gcp' />,
         ],
       },
