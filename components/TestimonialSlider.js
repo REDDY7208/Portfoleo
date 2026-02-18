@@ -2,31 +2,52 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
 import { FaQuoteLeft } from 'react-icons/fa';
 import Image from 'next/image';
 
 const testimonialData = [
   {
     image: '/t-avt-1.png',
-    name: 'Rajesh Kumar',
-    position: 'CTO, DSAIS',
+    name: 'Thilaga',
+    position: 'Senior DevOps Engineer',
     message:
-      'Praveen has been instrumental in transforming our AI/ML deployment processes. His expertise in MLOps and Kubernetes orchestration has significantly improved our model deployment efficiency and system reliability.',
+      'Praveen\'s expertise in CI/CD pipelines and infrastructure automation is outstanding. His ability to optimize deployment workflows and implement robust monitoring solutions has greatly enhanced our team\'s productivity.',
   },
   {
     image: '/t-avt-2.png',
-    name: 'Sarah Johnson',
-    position: 'Product Manager, EdTech Startup',
+    name: 'Hemanth',
+    position: 'DevOps Lead',
     message:
-      'Working with Praveen on our IELTS platform was exceptional. His DevOps skills and attention to security protocols ensured our platform could scale seamlessly while maintaining high performance standards.',
+      'Working with Praveen has been a great experience. His deep knowledge of Kubernetes, Docker, and cloud infrastructure helped us achieve seamless container orchestration and improved our system scalability significantly.',
   },
   {
     image: '/t-avt-3.png',
-    name: 'Dr. Amit Sharma',
-    position: 'Lead Data Scientist',
+    name: 'Janardhan',
+    position: 'Cloud Architect',
     message:
-      'Praveen\'s ability to bridge the gap between data science and production deployment is remarkable. His MLOps pipelines have streamlined our model lifecycle management and reduced deployment time by 70%.',
+      'Praveen\'s proficiency in Terraform and cloud-native technologies is impressive. He designed and implemented our entire infrastructure as code, making our deployments more reliable and maintainable.',
+  },
+  {
+    image: '/t-avt-1.png',
+    name: 'Kavaya',
+    position: 'DevOps Engineer',
+    message:
+      'Praveen is an excellent team player with strong technical skills in automation and DevOps practices. His contributions to our CI/CD pipeline optimization reduced deployment time by 60% and improved overall system reliability.',
+  },
+  {
+    image: '/t-avt-2.png',
+    name: 'Madhu',
+    position: 'Site Reliability Engineer',
+    message:
+      'Praveen\'s approach to monitoring and observability is exceptional. He implemented comprehensive logging and alerting systems that have significantly improved our incident response time and system uptime.',
+  },
+  {
+    image: '/t-avt-3.png',
+    name: 'Kalavathing',
+    position: 'DevOps Consultant',
+    message:
+      'Praveen demonstrates excellent problem-solving skills and deep understanding of DevOps principles. His work on automating infrastructure provisioning and implementing security best practices has been invaluable to our projects.',
   },
 ];
 

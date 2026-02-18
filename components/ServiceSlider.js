@@ -10,7 +10,7 @@ import {
   RxLightningBolt,
   RxArrowTopRight 
 } from 'react-icons/rx';
-import { FreeMode, Pagination } from 'swiper';
+import { FreeMode, Pagination } from 'swiper/modules';
 
 const serviceData = [
   {

@@ -1,66 +1,13 @@
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
 import ParticlesContainer from '../components/ParticlesContainer';
 import ProjectsBtn from '../components/ProjectsBtn';
 import Avatar from '../components/Avatar';
 import { motion } from 'framer-motion';
 import { fadeIn } from '../variants';
-import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 
 const Home = () => {
-  const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  useEffect(() => {
-    // Auto-play music when page loads (with user interaction)
-    const playAudio = () => {
-      if (audioRef.current) {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch((error) => {
-          console.log('Autoplay prevented:', error);
-        });
-      }
-    };
-
-    // Try to play after a small delay
-    const timer = setTimeout(playAudio, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play();
-        setIsPlaying(true);
-      }
-    }
-  };
-
   return (
     <div className='bg-primary/60 h-screen overflow-hidden'>
-      {/* Background Music */}
-      <audio ref={audioRef} loop>
-        <source src="/background-music.mp3" type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-
-      {/* Music Control Button - Responsive */}
-      <button
-        onClick={toggleMusic}
-        className='fixed top-20 right-4 sm:top-24 sm:right-8 z-50 bg-accent/20 hover:bg-accent/40 p-2 sm:p-3 rounded-full border border-accent/50 transition-all duration-300'
-        aria-label='Toggle background music'
-      >
-        {isPlaying ? (
-          <HiVolumeUp className='text-xl sm:text-2xl text-white' />
-        ) : (
-          <HiVolumeOff className='text-xl sm:text-2xl text-white' />
-        )}
-      </button>
 
       <div className='w-full h-full bg-gradient-to-r from-primary/10 via-black/30 to-black/10'>
         <div className='text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto px-4 sm:px-6'>
