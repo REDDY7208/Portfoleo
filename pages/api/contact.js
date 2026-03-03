@@ -19,21 +19,31 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Create transporter with SMTP credentials from environment variables
+    // Create transporter with more robust configuration for serverless
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT || 587,
-      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+      service: 'gmail', // Use service instead of host for better reliability
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // Use STARTTLS instead of SSL
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER || process.env.EMAIL_USER,
+        pass: process.env.SMTP_PASS || process.env.EMAIL_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: false
+      },
+      connectionTimeout: 60000, // 60 seconds
+      greetingTimeout: 30000, // 30 seconds
+      socketTimeout: 60000, // 60 seconds
     });
+
+    // Verify transporter configuration
+    await transporter.verify();
 
     // Email to you (receiving the contact form)
     const mailOptions = {
-      from: process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER,
-      to: process.env.SMTP_TO_EMAIL || process.env.SMTP_USER,
+      from: process.env.SMTP_FROM_EMAIL || process.env.EMAIL_FROM || process.env.SMTP_USER || process.env.EMAIL_USER,
+      to: process.env.SMTP_TO_EMAIL || process.env.EMAIL_FROM || process.env.SMTP_USER || process.env.EMAIL_USER,
       subject: `Portfolio Contact: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4;">
@@ -79,9 +89,22 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Email sending error:', error);
+    
+    // More specific error messages
+    let errorMessage = 'Failed to send email. Please try again later.';
+    
+    if (error.code === 'EBUSY' || error.code === 'ENOTFOUND') {
+      errorMessage = 'Network connectivity issue. Please try again in a moment.';
+    } else if (error.code === 'EAUTH') {
+      errorMessage = 'Email authentication failed. Please contact support.';
+    } else if (error.code === 'ETIMEDOUT') {
+      errorMessage = 'Email service timeout. Please try again.';
+    }
+    
     return res.status(500).json({ 
-      message: 'Failed to send email. Please try again later.',
-      error: error.message 
+      message: errorMessage,
+      error: error.message,
+      code: error.code 
     });
   }
 }
