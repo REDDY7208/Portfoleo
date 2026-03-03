@@ -12,13 +12,19 @@ module.exports = {
     container: {
       padding: {
         DEFAULT: '15px',
+        sm: '20px',
+        md: '30px',
+        lg: '40px',
+        xl: '50px',
       },
     },
     screens: {
+      xs: '475px',
       sm: '640px',
       md: '768px',
-      lg: '960px',
-      xl: '1200px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
     },
     extend: {
       colors: {

@@ -1,254 +1,298 @@
-import { BsGit, BsArrowUp, BsCheckCircle, BsEnvelope, BsArrowLeft, BsPlus, BsPencil, BsTrash } from 'react-icons/bs';
-import { FaGitlab, FaDocker } from 'react-icons/fa';
-import { SiSonarqube } from 'react-icons/si';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { fadeIn } from '../../variants';
+import { BsArrowLeft } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import Circles from '../../components/Circles';
 
 const SasthraSOS = () => {
   const router = useRouter();
-  const [hoveredBox, setHoveredBox] = useState(null);
-  const [selectedStage, setSelectedStage] = useState(null);
-  const [showCrudMenu, setShowCrudMenu] = useState(false);
-  const [stages, setStages] = useState([]);
-
-  const [pipelineStages, setPipelineStages] = useState([
-    { id: 'developer', label: 'Developer', icon: null, x: 50, y: 500 },
-    { id: 'git', label: 'Git', icon: BsGit, x: 50, y: 420 },
-    { id: 'gitlab', label: 'GitLab', icon: FaGitlab, x: 50, y: 340 },
-    { id: 'sonarqube', label: 'SonarQube', icon: SiSonarqube, x: 50, y: 260 },
-    { id: 'quality', label: 'Quality Gate', icon: BsCheckCircle, x: 180, y: 180 },
-    { id: 'email', label: 'Email Alert', icon: BsEnvelope, x: 50, y: 180 },
-    { id: 'build', label: 'Build', icon: null, x: 180, y: 100 },
-    { id: 'test', label: 'Test', icon: null, x: 310, y: 100 },
-    { id: 'container', label: 'Container Registry', icon: FaDocker, x: 440, y: 100 },
-    { id: 'deploy', label: 'Deploy Repo', icon: null, x: 570, y: 100 }
-  ]);
-
-  // CRUD Operations
-  const handleCreate = () => {
-    const newStage = {
-      id: `stage-${Date.now()}`,
-      label: 'New Stage',
-      icon: null,
-      x: 300,
-      y: 300
-    };
-    setPipelineStages([...pipelineStages, newStage]);
-    setShowCrudMenu(false);
-  };
-
-  const handleUpdate = (stageId) => {
-    const newLabel = prompt('Enter new label:');
-    if (newLabel) {
-      setPipelineStages(pipelineStages.map(stage => 
-        stage.id === stageId ? { ...stage, label: newLabel } : stage
-      ));
-    }
-    setSelectedStage(null);
-  };
-
-  const handleDelete = (stageId) => {
-    if (confirm('Are you sure you want to delete this stage?')) {
-      setPipelineStages(pipelineStages.filter(stage => stage.id !== stageId));
-    }
-    setSelectedStage(null);
-  };
-
-  const handleStageClick = (stageId) => {
-    setSelectedStage(selectedStage === stageId ? null : stageId);
-  };
-
-  const tooltips = {
-    developer: 'Software engineer who writes and commits code changes',
-    git: 'Version control system for tracking code changes',
-    gitlab: 'Git repository hosting and CI/CD platform',
-    sonarqube: 'Code quality analysis and security scanning tool',
-    quality: 'Automated quality gate checks for code standards',
-    email: 'Notification system for build status and alerts',
-    build: 'Compile and package the application',
-    test: 'Run automated tests to verify functionality',
-    container: 'Docker registry for storing container images',
-    deploy: 'Deployment repository for production releases'
-  };
 
   return (
-    <div className='h-screen bg-black/90 py-8 sm:py-12 relative overflow-hidden'>
+    <div className='h-screen bg-black/90 py-4 text-center xl:text-left relative overflow-hidden'>
       <Circles />
-      
-      {/* Back Button */}
-      <button
-        onClick={() => router.push('/work')}
-        className='absolute top-4 left-4 z-20 flex items-center gap-2 text-white/60 hover:text-accent transition-all duration-300'
-      >
-        <BsArrowLeft className='text-xl' />
-        <span className='text-sm'>Back to Projects</span>
-      </button>
-
-      {/* Title */}
-      <div className='absolute top-4 left-1/2 transform -translate-x-1/2 z-20'>
-        <h1 className='text-2xl sm:text-3xl font-bold text-white'>
-          Sasthra-<span className='text-accent'>SOS</span> Pipeline
-        </h1>
-      </div>
-
-      {/* CRUD Control Panel */}
-      <div className='absolute top-4 right-4 z-20 flex gap-2'>
+      <div className='container mx-auto h-full flex flex-col relative z-10 px-8 xl:px-16'>
         <button
-          onClick={() => setShowCrudMenu(!showCrudMenu)}
-          className='bg-accent/80 hover:bg-accent text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300'
+          onClick={() => router.push('/work')}
+          className='absolute top-4 left-4 flex items-center gap-2 text-white/60 hover:text-accent transition-all duration-300 z-50'
         >
-          <BsPlus className='text-xl' />
-          <span className='text-sm'>Add Stage</span>
+          <BsArrowLeft className='text-lg' />
+          <span className='text-xs'>Back to Projects</span>
         </button>
-        
-        {showCrudMenu && (
-          <div className='absolute top-12 right-0 bg-black/90 backdrop-blur-sm rounded-lg p-4 border border-white/20 w-48'>
-            <button
-              onClick={handleCreate}
-              className='w-full text-left text-white hover:text-accent transition-all duration-300 py-2 px-3 rounded hover:bg-white/5'
-            >
-              Create New Stage
-            </button>
-          </div>
-        )}
-      </div>
 
-      {/* Pipeline stages */}
-      <div className='relative h-full'>
-        {pipelineStages.map((stage) => {
-          const IconComponent = stage.icon;
-          return (
-            <div key={stage.id}>
-              {/* Stage box */}
-              <div 
-                className={`absolute bg-white/10 backdrop-blur-sm rounded-lg p-3 border transition-all duration-300 flex items-center gap-2 ${
-                  selectedStage === stage.id 
-                    ? 'border-accent bg-white/20 scale-105' 
-                    : 'border-white/20 hover:bg-white/20 cursor-pointer'
-                }`}
-                style={{ left: `${stage.x}px`, bottom: `${600 - stage.y}px` }}
-                onMouseEnter={() => setHoveredBox(stage.id)}
-                onMouseLeave={() => setHoveredBox(null)}
-                onClick={() => handleStageClick(stage.id)}
-              >
-                {IconComponent && <IconComponent className='text-white text-lg' />}
-                <span className='text-white text-sm whitespace-nowrap'>{stage.label}</span>
-                
-                {/* CRUD Action Buttons */}
-                {selectedStage === stage.id && (
-                  <div className='absolute -top-12 left-0 flex gap-2 bg-black/90 backdrop-blur-sm rounded-lg p-2 border border-white/20'>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleUpdate(stage.id);
-                      }}
-                      className='text-blue-400 hover:text-blue-300 transition-all duration-300 p-2 rounded hover:bg-white/10'
-                      title='Edit'
-                    >
-                      <BsPencil />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(stage.id);
-                      }}
-                      className='text-red-400 hover:text-red-300 transition-all duration-300 p-2 rounded hover:bg-white/10'
-                      title='Delete'
-                    >
-                      <BsTrash />
-                    </button>
-                  </div>
-                )}
-                
-                {/* Tooltip */}
-                {hoveredBox === stage.id && !selectedStage && (
-                  <div className='absolute left-full ml-4 top-1/2 transform -translate-y-1/2 bg-black/90 backdrop-blur-sm rounded-lg p-3 border border-white/20 w-64 z-10'>
-                    <p className='text-white text-xs'>
-                      {tooltips[stage.id] || 'Custom pipeline stage'}
-                    </p>
-                  </div>
-                )}
+        <motion.div
+          variants={fadeIn('up', 0.2)}
+          initial='hidden'
+          animate='show'
+          exit='hidden'
+          className='w-full mt-12 mb-4'
+        >
+          <h1 className='text-[28px] sm:text-[36px] font-bold mb-2'>
+            Sasthra-<span className='text-accent'>SOS</span>
+          </h1>
+          <p className='text-sm text-white/80 mb-4'>DevOps-Driven AI Learning Platform | Microservices Architecture | Cloud-Native Deployment</p>
+
+          {/* Two Column Layout */}
+          <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 h-[calc(100vh-180px)] overflow-hidden'>
+            
+            {/* LEFT COLUMN */}
+            <div className='space-y-3 overflow-y-auto pr-2' style={{scrollbarWidth: 'thin'}}>
+              
+              {/* Project Overview */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>📌 Project Overview</h2>
+                <p className='text-white/70 mb-2 text-xs leading-relaxed'>
+                  Sasthra-SOS is a cloud-native AI-powered tutoring platform with production-grade microservices 
+                  architecture, complete CI/CD automation, infrastructure as code, and MLOps integration.
+                </p>
+                <p className='text-white/60 text-[10px] italic'>
+                  DevOps-focused (60%) | Backend (20%) | AI/ML (20%)
+                </p>
               </div>
 
-            {/* Arrows */}
-            {stage.id === 'developer' && (
-              <div 
-                className='absolute pointer-events-none'
-                style={{ left: `${stage.x + 60}px`, bottom: `${600 - stage.y + 40}px` }}
-              >
-                <BsArrowUp className='text-white/60 text-sm' />
-              </div>
-            )}
-            {stage.id === 'git' && (
-              <div 
-                className='absolute pointer-events-none'
-                style={{ left: `${stage.x + 60}px`, bottom: `${600 - stage.y + 40}px` }}
-              >
-                <BsArrowUp className='text-white/60 text-sm' />
-              </div>
-            )}
-            {stage.id === 'gitlab' && (
-              <div 
-                className='absolute pointer-events-none'
-                style={{ left: `${stage.x + 60}px`, bottom: `${600 - stage.y + 40}px` }}
-              >
-                <BsArrowUp className='text-white/60 text-sm' />
-              </div>
-            )}
-            {stage.id === 'sonarqube' && (
-              <>
-                {/* Arrow to Quality Gate */}
-                <div 
-                  className='absolute pointer-events-none'
-                  style={{ left: `${stage.x + 80}px`, bottom: `${600 - stage.y + 20}px` }}
-                >
-                  <BsArrowUp className='text-white/60 text-sm rotate-45' />
+              {/* Architecture */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>🏗️ Complete Architecture</h2>
+                <div className='grid grid-cols-2 gap-2 text-[10px]'>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white/70'>✓ Microservices-based backend</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white/70'>✓ Containerized workloads</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white/70'>✓ Kubernetes orchestration</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white/70'>✓ NGINX reverse proxy with SSL</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white/70'>✓ Cloud infrastructure (AWS/GCP)</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white/70'>✓ DNS management via GoDaddy</p>
+                  </div>
                 </div>
-                {/* Arrow to Email Alert */}
-                <div 
-                  className='absolute pointer-events-none'
-                  style={{ left: `${stage.x + 60}px`, bottom: `${600 - stage.y + 40}px` }}
-                >
-                  <BsArrowUp className='text-white/60 text-sm' />
+              </div>
+
+              {/* Deployment Flow */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>🔁 Deployment Flow</h2>
+                <div className='grid grid-cols-2 gap-x-3 gap-y-1 text-[10px]'>
+                  <div className='flex items-center gap-2 text-white/70'>
+                    <span className='text-accent font-bold text-xs'>1.</span>
+                    <p>GitLab code push</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-white/70'>
+                    <span className='text-accent font-bold text-xs'>2.</span>
+                    <p>CI/CD pipeline triggers</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-white/70'>
+                    <span className='text-accent font-bold text-xs'>3.</span>
+                    <p>Docker build & push</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-white/70'>
+                    <span className='text-accent font-bold text-xs'>4.</span>
+                    <p>Terraform provisions</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-white/70'>
+                    <span className='text-accent font-bold text-xs'>5.</span>
+                    <p>Ansible configures</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-white/70'>
+                    <span className='text-accent font-bold text-xs'>6.</span>
+                    <p>K8s deployment</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-white/70'>
+                    <span className='text-accent font-bold text-xs'>7.</span>
+                    <p>NGINX routing & SSL</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-white/70'>
+                    <span className='text-accent font-bold text-xs'>8.</span>
+                    <p>DNS configuration</p>
+                  </div>
                 </div>
-              </>
-            )}
-            {stage.id === 'quality' && (
-              <div 
-                className='absolute pointer-events-none'
-                style={{ left: `${stage.x + 60}px`, bottom: `${600 - stage.y + 40}px` }}
-              >
-                <BsArrowUp className='text-white/60 text-sm' />
               </div>
-            )}
-            {stage.id === 'build' && (
-              <div 
-                className='absolute pointer-events-none'
-                style={{ left: `${stage.x + 80}px`, bottom: `${600 - stage.y}px` }}
-              >
-                <BsArrowUp className='text-white/60 text-sm rotate-90' />
+
+              {/* DevOps Implementation */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>⚙️ DevOps Implementation (60%)</h2>
+                <div className='space-y-2'>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <h3 className='font-semibold text-white text-xs mb-1'>🔹 CI/CD Pipeline</h3>
+                    <p className='text-white/60 text-[10px]'>GitLab CI & Jenkins: Automated testing, Docker builds, zero-downtime deployments</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <h3 className='font-semibold text-white text-xs mb-1'>🔹 Infrastructure as Code</h3>
+                    <p className='text-white/60 text-[10px]'>Terraform: VPC, subnets, security groups, load balancers, K8s clusters (EKS/GKE)</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <h3 className='font-semibold text-white text-xs mb-1'>🔹 Orchestration</h3>
+                    <p className='text-white/60 text-[10px]'>Kubernetes: Rolling updates, HPA, resource optimization, health checks</p>
+                  </div>
+                </div>
               </div>
-            )}
-            {stage.id === 'test' && (
-              <div 
-                className='absolute pointer-events-none'
-                style={{ left: `${stage.x + 80}px`, bottom: `${600 - stage.y}px` }}
-              >
-                <BsArrowUp className='text-white/60 text-sm rotate-90' />
+
+              {/* Technical Stack */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>📊 Technical Stack</h2>
+                <div className='grid grid-cols-2 gap-2 text-[10px]'>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white font-semibold mb-1'>DevOps</p>
+                    <p className='text-white/60'>Jenkins, GitLab CI, Docker, K8s, Terraform, Ansible</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white font-semibold mb-1'>Cloud</p>
+                    <p className='text-white/60'>AWS (EKS, EC2, S3), GCP (GKE)</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white font-semibold mb-1'>AI/ML</p>
+                    <p className='text-white/60'>PyTorch, TensorFlow, Hugging Face</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <p className='text-white font-semibold mb-1'>Data</p>
+                    <p className='text-white/60'>Apache Airflow, SQL</p>
+                  </div>
+                </div>
               </div>
-            )}
-            {stage.id === 'container' && (
-              <div 
-                className='absolute pointer-events-none'
-                style={{ left: `${stage.x + 80}px`, bottom: `${600 - stage.y}px` }}
-              >
-                <BsArrowUp className='text-white/60 text-sm rotate-90' />
+            </div>
+
+            {/* RIGHT COLUMN */}
+            <div className='space-y-3 overflow-y-auto pr-2' style={{scrollbarWidth: 'thin'}}>
+              
+              {/* DNS Configuration */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>🌍 DNS Configuration</h2>
+                <div className='grid grid-cols-2 gap-2 text-[10px] text-white/60'>
+                  <p>• Domain from GoDaddy</p>
+                  <p>• A Record → Load Balancer IP</p>
+                  <p>• CNAME subdomain routing</p>
+                  <p>• SSL validation & HTTPS</p>
+                  <p>• Nameserver config</p>
+                  <p>• Firewall security</p>
+                </div>
               </div>
-            )}
+
+              {/* AI/ML Integration */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>🤖 AI/ML Integration (20%)</h2>
+                <div className='space-y-2'>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <h3 className='font-semibold text-white text-xs mb-1'>Model Deployment</h3>
+                    <p className='text-white/60 text-[10px]'>Containerized inference APIs with REST endpoints</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <h3 className='font-semibold text-white text-xs mb-1'>MLOps Workflow</h3>
+                    <p className='text-white/60 text-[10px]'>Automated deployment, retraining, monitoring</p>
+                  </div>
+                  <div className='bg-white/5 p-2 rounded border border-white/10'>
+                    <h3 className='font-semibold text-white text-xs mb-1'>Data Engineering</h3>
+                    <p className='text-white/60 text-[10px]'>Pipelines with Python, SQL, Apache Airflow</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Backend Engineering */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>🖥️ Backend Engineering (20%)</h2>
+                <div className='grid grid-cols-2 gap-2 text-[10px] text-white/60'>
+                  <p>• REST APIs</p>
+                  <p>• Token-based auth</p>
+                  <p>• User authentication</p>
+                  <p>• Secure communication</p>
+                  <p>• Assessment management</p>
+                  <p>• API optimization</p>
+                </div>
+              </div>
+
+              {/* Security & Performance */}
+              <div className='grid grid-cols-2 gap-3'>
+                <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                  <h2 className='text-sm font-semibold mb-2 text-accent'>🔐 Security</h2>
+                  <ul className='text-white/60 space-y-1 text-[10px]'>
+                    <li>• GitLab admin access</li>
+                    <li>• Branch protection</li>
+                    <li>• RBAC</li>
+                    <li>• Firewall config</li>
+                    <li>• HTTPS enforcement</li>
+                  </ul>
+                </div>
+                <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                  <h2 className='text-sm font-semibold mb-2 text-accent'>⚡ Performance</h2>
+                  <ul className='text-white/60 space-y-1 text-[10px]'>
+                    <li>• CPU/memory monitoring</li>
+                    <li>• Pod performance</li>
+                    <li>• K8s auto-scaling</li>
+                    <li>• Load balancing</li>
+                    <li>• Resource optimization</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Impact & Results */}
+              <div className='bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>🎯 Impact & Results</h2>
+                <div className='grid grid-cols-2 gap-2 text-[10px]'>
+                  <div className='flex items-start gap-1'>
+                    <span className='text-accent'>✓</span>
+                    <p className='text-white/70'>Automated deployment</p>
+                  </div>
+                  <div className='flex items-start gap-1'>
+                    <span className='text-accent'>✓</span>
+                    <p className='text-white/70'>Scalable architecture</p>
+                  </div>
+                  <div className='flex items-start gap-1'>
+                    <span className='text-accent'>✓</span>
+                    <p className='text-white/70'>HTTPS production env</p>
+                  </div>
+                  <div className='flex items-start gap-1'>
+                    <span className='text-accent'>✓</span>
+                    <p className='text-white/70'>Reduced deploy time</p>
+                  </div>
+                  <div className='flex items-start gap-1'>
+                    <span className='text-accent'>✓</span>
+                    <p className='text-white/70'>High availability</p>
+                  </div>
+                  <div className='flex items-start gap-1'>
+                    <span className='text-accent'>✓</span>
+                    <p className='text-white/70'>Production AI serving</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contribution Breakdown */}
+              <div className='bg-gradient-to-r from-accent/20 to-transparent backdrop-blur-sm rounded-lg p-3 border border-accent/30'>
+                <h2 className='text-base font-semibold mb-2 text-accent'>💼 Contribution Breakdown</h2>
+                <div className='space-y-2'>
+                  <div className='flex items-center gap-3'>
+                    <div className='w-24 text-white/80 text-[10px]'>DevOps</div>
+                    <div className='flex-1 bg-white/10 rounded-full h-4 overflow-hidden'>
+                      <div className='bg-accent h-full flex items-center justify-center text-[10px] font-bold' style={{width: '60%'}}>
+                        60%
+                      </div>
+                    </div>
+                  </div>
+                  <div className='flex items-center gap-3'>
+                    <div className='w-24 text-white/80 text-[10px]'>Backend</div>
+                    <div className='flex-1 bg-white/10 rounded-full h-4 overflow-hidden'>
+                      <div className='bg-accent/80 h-full flex items-center justify-center text-[10px] font-bold' style={{width: '20%'}}>
+                        20%
+                      </div>
+                    </div>
+                  </div>
+                  <div className='flex items-center gap-3'>
+                    <div className='w-24 text-white/80 text-[10px]'>AI/ML</div>
+                    <div className='flex-1 bg-white/10 rounded-full h-4 overflow-hidden'>
+                      <div className='bg-accent/80 h-full flex items-center justify-center text-[10px] font-bold' style={{width: '20%'}}>
+                        20%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        );
-      })}
+
+        </motion.div>
       </div>
     </div>
   );
